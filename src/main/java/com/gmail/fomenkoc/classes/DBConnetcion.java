@@ -10,13 +10,13 @@ public class DBConnetcion {
 	private static final String URL = 
 						"jdbc:mysql://localhost:3306/Store?serverTimezone=UTC";
 
-	@SuppressWarnings("deprecation")
 	public static Connection getConnection(String userName, String password)
 			throws SQLException, InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		USER_NAME = userName;
 		PASSWORD = password;
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
+//		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 	}
