@@ -1,5 +1,8 @@
 package com.gmail.fomenkoc.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.gmail.fomenkoc.dao.UserDaoInterface;
@@ -10,7 +13,16 @@ public class UserDao implements UserDaoInterface {
 	private static final String READ_ALL = "";
 	private static final String CREATE = "";
 	private static final String READ = "";
+	private static final String UPDATE = "";
 	private static final String DELETE = "";
+	private Connection connection;
+	private PreparedStatement ps;
+	private ResultSet rs;
+
+	private void initStatements() {
+		this.ps = null;
+		this.rs = null;
+	}
 
 	@Override
 	public User create(User t) {

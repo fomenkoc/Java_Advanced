@@ -7,20 +7,28 @@ public class Cart {
 	private Integer userID;
 	private Integer prodID;
 	private Double price;
+	private Double quantity;
+	private Double sum;
 
-	public Cart(Integer cartID, Integer userID, Integer prodID, Double price) {
+	public Cart(Integer cartID, Integer userID, Integer prodID, Double price,
+			Double quantity, Double sum) {
 		super();
 		this.cartID = cartID;
 		this.userID = userID;
 		this.prodID = prodID;
 		this.price = price;
+		this.quantity = quantity;
+		this.sum = sum;
 	}
 
-	public Cart(Integer userID, Integer prodID, Double price) {
+	public Cart(Integer userID, Integer prodID, Double price, Double quantity,
+			Double sum) {
 		super();
 		this.userID = userID;
 		this.prodID = prodID;
 		this.price = price;
+		this.quantity = quantity;
+		this.sum = sum;
 	}
 
 	public Integer getCartID() {
@@ -55,9 +63,25 @@ public class Cart {
 		this.price = price;
 	}
 
+	public Double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+
+	public Double getSum() {
+		return sum;
+	}
+
+	public void setSum(Double sum) {
+		this.sum = sum;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cartID, price, prodID, userID);
+		return Objects.hash(cartID, price, prodID, quantity, sum, userID);
 	}
 
 	@Override
@@ -72,13 +96,16 @@ public class Cart {
 		return Objects.equals(cartID, other.cartID)
 				&& Objects.equals(price, other.price)
 				&& Objects.equals(prodID, other.prodID)
+				&& Objects.equals(quantity, other.quantity)
+				&& Objects.equals(sum, other.sum)
 				&& Objects.equals(userID, other.userID);
 	}
 
 	@Override
 	public String toString() {
 		return "Cart [cartID=" + cartID + ", userID=" + userID + ", prodID="
-				+ prodID + ", price=" + price + "]";
+				+ prodID + ", price=" + price + ", quantity=" + quantity
+				+ ", sum=" + sum + "]";
 	}
 
 }

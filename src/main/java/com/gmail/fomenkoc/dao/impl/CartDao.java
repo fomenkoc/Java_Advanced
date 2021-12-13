@@ -1,45 +1,138 @@
 package com.gmail.fomenkoc.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.gmail.fomenkoc.dao.CartDaoInterface;
 import com.gmail.fomenkoc.domain.Cart;
+import com.gmail.fomenkoc.utils.DBConnetcion;
+import com.gmail.fomenkoc.utils.Mapper;
 
 public class CartDao implements CartDaoInterface {
 
-	private static final String READ_ALL = "";
-	private static final String CREATE = "";
-	private static final String READ = "";
-	private static final String DELETE = "";
+	private static final String READ_ALL = "SELECT * "
+										 + "FROM cart";
+	
+	private static final String CREATE = 
+					"INSERT INTO cart(user_id, prod_id, price, quantity, sum) "
+				  + "VALUES(?, ?, ?, ?, ?)";
+	
+	private static final String READ = "SELECT * "
+									 + "FROM cart "
+									 + "WHERE cart_id = ?";
+	
+	private static final String UPDATE = 
+			   "UPDATE cart "
+			 + "SET user_id = ?, prod_id = ?, price = ?, quantity = ?, sum = ? "
+			 + "WHERE cart_id = ?";
+	
+	private static final String DELETE = "DELETE "
+									   + "FROM cart "
+									   + "WHERE cart_id = ?";
+	
+	private Connection connection;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	public CartDao(Connection connection) {
+		super();
+		this.connection = DBConnetcion.getConnection();
+	}
+
+	private void initStatements() {
+		this.ps = null;
+		this.rs = null;
+	}
 
 	@Override
-	public Cart create(Cart t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cart create(Cart cart) {
+		initStatements();
+
+		try {
+			this.ps = connection.prepareStatement(CREATE,
+					Statement.RETURN_GENERATED_KEYS);
+			this.ps.setInt(1, cart.getUserID());
+			this.ps.setInt(2, cart.getProdID());
+			this.ps.setDouble(3, cart.getPrice());
+			this.ps.setDouble(4, cart.getQuantity());
+			this.ps.setDouble(5, cart.getSum());
+			this.ps.executeUpdate();
+			this.rs = ps.getGeneratedKeys();
+			this.rs.next();
+			cart.setCartID(rs.getInt("cart_id"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return cart;
 	}
 
 	@Override
 	public Cart read(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		initStatements();
+		Cart cart = null;
+		try {
+			this.ps = connection.prepareStatement(READ);
+			this.ps.setInt(1, id);
+			this.rs = ps.executeQuery();
+			this.rs.next();
+			cart = Mapper.cart(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cart;
 	}
 
 	@Override
-	public Cart update(Cart t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cart update(Cart cart) {
+		initStatements();
+
+		try {
+			this.ps = connection.prepareStatement(UPDATE);
+			this.ps.setInt(1, cart.getUserID());
+			this.ps.setInt(2, cart.getProdID());
+			this.ps.setDouble(3, cart.getPrice());
+			this.ps.setDouble(4, cart.getQuantity());
+			this.ps.setDouble(5, cart.getSum());
+			this.ps.setInt(6, cart.getCartID());
+			this.ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cart;
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		initStatements();
+		try {
+			this.ps = connection.prepareStatement(DELETE);
+			this.ps.setInt(1, id);
+			this.ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public ArrayList<Cart> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		initStatements();
+		ArrayList<Cart> carts = new ArrayList<>();
+		try {
+			this.ps = connection.prepareStatement(READ_ALL);
+			this.rs = this.ps.executeQuery();
+			while (this.rs.next()) {
+				carts.add(Mapper.cart(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return carts;
 	}
 
 }

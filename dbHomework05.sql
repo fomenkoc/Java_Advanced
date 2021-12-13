@@ -36,6 +36,8 @@ CREATE TABLE cart(
     user_id INT NOT NULL,
     prod_id INT NOT NULL,
     price DECIMAL(9,2) NOT NULL,
+    quantity DECIMAL(9,3) NOT NULL,
+    sum DECIMAL(9,2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (prod_id) REFERENCES prod(prod_id)
 );
@@ -46,7 +48,7 @@ CREATE TABLE order_head(
     order_status VARCHAR(255),
     order_note VARCHAR(255),
     user_id INT NOT NULL,
-    total_quantity DECIMAL(9,2) NOT NULL,
+    total_quantity DECIMAL(9,3) NOT NULL,
     total_sum DECIMAL(9,2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
@@ -55,8 +57,9 @@ CREATE TABLE order_details(
 	order_det_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
     prod_id INT NOT NULL,
-    quantity DECIMAL(9,2) NOT NULL,
+    quantity DECIMAL(9,3) NOT NULL,
     price DECIMAL(9,2) NOT NULL,
+    sum DECIMAL(9,2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES order_head(order_id),
     FOREIGN KEY (prod_id) REFERENCES prod(prod_id)
 );
