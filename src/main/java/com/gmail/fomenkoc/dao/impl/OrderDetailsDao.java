@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import com.gmail.fomenkoc.dao.OrderDetailsDaoInterface;
 import com.gmail.fomenkoc.domain.OrderDetails;
+import com.gmail.fomenkoc.domain.OrderHead;
+import com.gmail.fomenkoc.utils.DBConnetcion;
 import com.gmail.fomenkoc.utils.Mapper;
 
 
@@ -19,7 +21,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 	
 	private static final String CREATE = 
 		  "INSERT INTO order_details (order_id, prod_id, quantity, price, sum) "
-		+ "VALUES(?, ?, ?, ?)";
+		+ "VALUES(?, ?, ?, ?, ?)";
 	
 	private static final String READ = "SELECT * "
 									 + "FROM order_details "
@@ -41,6 +43,13 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 	private PreparedStatement ps;
 	private ResultSet rs;
 
+	
+	
+	public OrderDetailsDao() {
+		super();
+		this.connection = DBConnetcion.getConnection();
+	}
+
 	private void initStatements() {
 		this.ps = null;
 		this.rs = null;
@@ -59,10 +68,12 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			this.ps.setDouble(5, orderDetails.getSum());
 			this.ps.executeUpdate();
 			this.rs = this.ps.getGeneratedKeys();
-			orderDetails.setOrderDetID(rs.getInt("order_det_id"));
+			this.rs.next();
+			orderDetails.setOrderDetID(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		updateTotals(orderDetails.getOrderID());
 		return orderDetails;
 	}
 
@@ -98,7 +109,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		updateTotals(orderDetails.getOrderID());
 		return orderDetails;
 	}
 
@@ -112,7 +123,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	@Override
@@ -145,6 +156,24 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			e.printStackTrace();
 		}
 		return details;
+	}
+	
+	public void updateTotals (Integer orderID) {
+		Double totalQuantity = 0.0;
+		Double totalSum = 0.0;
+		
+		ArrayList<OrderDetails> details = readByOrderID(orderID);
+		
+		for (OrderDetails orderDetails : details) {
+			totalQuantity += orderDetails.getQuantity();
+			totalSum += orderDetails.getSum();
+		}
+		OrderHeadDao headDao = new OrderHeadDao();
+		OrderHead orderHead = headDao.read(orderID);
+		orderHead.setTotalQuantity(totalQuantity);
+		orderHead.setTotalSum(totalSum);
+		headDao.update(orderHead);
+		
 	}
 
 }

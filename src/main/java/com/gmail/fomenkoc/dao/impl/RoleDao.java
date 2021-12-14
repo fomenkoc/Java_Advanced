@@ -3,21 +3,43 @@ package com.gmail.fomenkoc.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.gmail.fomenkoc.dao.RoleDaoInterface;
 import com.gmail.fomenkoc.domain.Role;
+import com.gmail.fomenkoc.utils.DBConnetcion;
+import com.gmail.fomenkoc.utils.Mapper;
 
 public class RoleDao implements RoleDaoInterface {
 
-	private static final String READ_ALL = "";
-	private static final String CREATE = "";
-	private static final String READ = "";
-	private static final String UPDATE = "";
-	private static final String DELETE = "";
+	private static final String READ_ALL = "SELECT * "
+										 + "FROM role";
+	
+	private static final String CREATE = "INSERT INTO role(role_name) "
+									   + "VALUES(?)";
+	
+	private static final String READ = "SELECT * "
+			 						 + "FROM role "
+			 						 + "WHERE role_id = ?";
+	
+	private static final String UPDATE = "UPDATE role "
+									   + "SET role_name = ? "
+									   + "WHERE role_id = ?";
+	
+	private static final String DELETE = "DELETE "
+			 						   + "FROM role "
+			 						   + "WHERE role_id = ?";
+	
 	private Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
+
+	public RoleDao() {
+		super();
+		this.connection = DBConnetcion.getConnection();
+	}
 
 	private void initStatements() {
 		this.ps = null;
@@ -25,33 +47,81 @@ public class RoleDao implements RoleDaoInterface {
 	}
 
 	@Override
-	public Role create(Role t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Role create(Role role) {
+		initStatements();
+		try {
+			this.ps = this.connection.prepareStatement(CREATE,
+					Statement.RETURN_GENERATED_KEYS);
+			this.ps.setString(1, role.getRoleName());
+			this.ps.executeUpdate();
+			this.rs = this.ps.getGeneratedKeys();
+			this.rs.next();
+			role.setRoleID(this.rs.getInt(1));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return role;
 	}
 
 	@Override
 	public Role read(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		initStatements();
+		Role role = null;
+		try {
+			this.ps = connection.prepareStatement(READ);
+			this.ps.setInt(1, id);
+			this.rs = this.ps.executeQuery();
+			this.rs.next();
+			role = Mapper.role(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return role;
 	}
 
 	@Override
-	public Role update(Role t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Role update(Role role) {
+		initStatements();
+		try {
+			this.ps = connection.prepareStatement(UPDATE);
+			this.ps.setString(1, role.getRoleName());
+			this.ps.setInt(2, role.getRoleID());
+			this.ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return role;
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		initStatements();
+		try {
+			this.ps = connection.prepareStatement(DELETE);
+			this.ps.setInt(1, id);
+			this.ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 
 	}
 
 	@Override
 	public ArrayList<Role> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		initStatements();
+		ArrayList<Role> roles = new ArrayList<>();
+		try {
+			this.ps = connection.prepareStatement(READ_ALL);
+			this.rs = this.ps.executeQuery();
+			while (this.rs.next()) {
+				roles.add(Mapper.role(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return roles;
 	}
 
 }

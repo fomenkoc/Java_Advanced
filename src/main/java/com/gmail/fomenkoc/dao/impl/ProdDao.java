@@ -57,7 +57,7 @@ public class ProdDao implements ProdDaoInterface {
 			this.ps.executeUpdate();
 			this.rs = ps.getGeneratedKeys();
 			this.rs.next();
-			prod.setProdID(rs.getInt("prod_id"));
+			prod.setProdID(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -14,10 +14,6 @@ CREATE TABLE role(
     role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO role(role_name)
-VALUES('Administrator'),
-	('Customer');
-
 CREATE TABLE user(
 	user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -27,9 +23,6 @@ CREATE TABLE user(
     password VARCHAR(255) NOT NULL,
     FOREIGN KEY (role_id) REFERENCES role(role_id)
 );
-
-INSERT INTO user(email, first_name, last_name, role_id, password)
-VALUES('admin@magazines.ua', 'Admin', 'Admin', 1, '12345');
 
 CREATE TABLE cart(
 	cart_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -41,6 +34,8 @@ CREATE TABLE cart(
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (prod_id) REFERENCES prod(prod_id)
 );
+
+
 
 CREATE TABLE order_head(
 	order_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

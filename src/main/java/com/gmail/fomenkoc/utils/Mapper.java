@@ -35,8 +35,8 @@ public class Mapper {
 	public static OrderDetails orderDetails(ResultSet rs) {
 		OrderDetails orderDetails = null;
 		try {
-			Integer orderDetID = rs.getInt("cart_id");
-			Integer orderID = rs.getInt("user_id");
+			Integer orderDetID = rs.getInt("order_det_id");
+			Integer orderID = rs.getInt("order_id");
 			Integer prodID = rs.getInt("prod_id");
 			Double quantity = rs.getDouble("quantity");
 			Double price = rs.getDouble("price");
