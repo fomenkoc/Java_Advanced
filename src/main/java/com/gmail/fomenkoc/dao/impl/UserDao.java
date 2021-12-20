@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.UserDaoInterface;
 import com.gmail.fomenkoc.domain.User;
 import com.gmail.fomenkoc.utils.DBConnetcion;
@@ -37,6 +39,7 @@ public class UserDao implements UserDaoInterface {
 	private static final String LOGIN = "SELECT * "
 									  + "FROM user "
 									  + "WHERE email = ? AND password = ?";
+	public static final Logger LOG = Logger.getLogger(UserDao.class);
 	
 	private Connection connection;
 	private PreparedStatement ps;
@@ -65,10 +68,11 @@ public class UserDao implements UserDaoInterface {
 			this.ps.setString(5, user.getPassword());
 			this.ps.executeUpdate();
 			this.rs = this.ps.getGeneratedKeys();
-			this.rs.next();
-			user.setUserID(rs.getInt(1));
+			
+			if (this.rs.next())
+				user.setUserID(rs.getInt(1));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return user;
 	}
@@ -81,10 +85,10 @@ public class UserDao implements UserDaoInterface {
 			this.ps = connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			user = Mapper.user(rs);
+			if (this.rs.next())
+				user = Mapper.user(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return user;
 	}
@@ -102,7 +106,7 @@ public class UserDao implements UserDaoInterface {
 			this.ps.setInt(6, user.getUserID());
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return user;
 	}
@@ -115,7 +119,7 @@ public class UserDao implements UserDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 	}
@@ -131,7 +135,7 @@ public class UserDao implements UserDaoInterface {
 				users.add(Mapper.user(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return users;
 	}
@@ -144,10 +148,11 @@ public class UserDao implements UserDaoInterface {
 			this.ps.setString(1, email);
 			this.ps.setString(2, password);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			user = Mapper.user(rs);
+
+			if (this.rs.next())
+				user = Mapper.user(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return user;
 	}

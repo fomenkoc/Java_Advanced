@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.RoleDaoInterface;
 import com.gmail.fomenkoc.domain.Role;
 import com.gmail.fomenkoc.utils.DBConnetcion;
@@ -31,6 +33,7 @@ public class RoleDao implements RoleDaoInterface {
 	private static final String DELETE = "DELETE "
 			 						   + "FROM role "
 			 						   + "WHERE role_id = ?";
+	private static final Logger LOG = Logger.getLogger(RoleDao.class);
 	
 	private Connection connection;
 	private PreparedStatement ps;
@@ -55,10 +58,10 @@ public class RoleDao implements RoleDaoInterface {
 			this.ps.setString(1, role.getRoleName());
 			this.ps.executeUpdate();
 			this.rs = this.ps.getGeneratedKeys();
-			this.rs.next();
-			role.setRoleID(this.rs.getInt(1));
+			if (this.rs.next())
+				role.setRoleID(this.rs.getInt(1));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return role;
 	}
@@ -71,10 +74,10 @@ public class RoleDao implements RoleDaoInterface {
 			this.ps = connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			role = Mapper.role(rs);
+			if (this.rs.next())
+				role = Mapper.role(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return role;
 	}
@@ -88,7 +91,7 @@ public class RoleDao implements RoleDaoInterface {
 			this.ps.setInt(2, role.getRoleID());
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return role;
@@ -102,7 +105,7 @@ public class RoleDao implements RoleDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		
 
@@ -119,7 +122,7 @@ public class RoleDao implements RoleDaoInterface {
 				roles.add(Mapper.role(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return roles;
 	}

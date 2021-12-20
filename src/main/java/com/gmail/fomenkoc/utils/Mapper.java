@@ -105,8 +105,9 @@ public class Mapper {
 			String firstName = rs.getString("first_name");
 			String lastName = rs.getString("last_name");
 			Integer roleID = rs.getInt("role_id");
+			String password = rs.getString("password");
 			user = new User(userID, email, firstName, lastName, roleID,
-					lastName);
+					password);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

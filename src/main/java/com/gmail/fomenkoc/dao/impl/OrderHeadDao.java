@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.OrderHeadDaoInterface;
 import com.gmail.fomenkoc.domain.OrderHead;
 import com.gmail.fomenkoc.utils.DBConnetcion;
@@ -35,6 +37,7 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 	private static final String DELETE = "DELETE "
 			 						   + "FROM order_head "
 			 						   + "WHERE order_id = ?";
+	private static final Logger LOG = Logger.getLogger(OrderDetailsDao.class);
 	
 	private Connection connection;
 	private PreparedStatement ps;
@@ -67,10 +70,10 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 			this.ps.setDouble(6, orderHead.getTotalSum());
 			this.ps.executeUpdate();
 			this.rs = this.ps.getGeneratedKeys();
-			this.rs.next();
-			orderHead.setOrderID(rs.getInt(1));
+			if (this.rs.next())
+				orderHead.setOrderID(rs.getInt(1));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return orderHead;
@@ -84,10 +87,10 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 			this.ps = this.connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			orderHead = Mapper.orderHead(rs);
+			if (this.rs.next())
+				orderHead = Mapper.orderHead(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return orderHead;
 	}
@@ -107,7 +110,7 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 			this.ps.setInt(7, orderHead.getOrderID());
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return orderHead;
 	}
@@ -120,7 +123,7 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 	}
@@ -136,7 +139,7 @@ public class OrderHeadDao implements OrderHeadDaoInterface {
 				heads.add(Mapper.orderHead(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return heads;
 	}

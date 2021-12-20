@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.ProdDaoInterface;
 import com.gmail.fomenkoc.domain.Prod;
 import com.gmail.fomenkoc.utils.DBConnetcion;
@@ -29,6 +31,7 @@ public class ProdDao implements ProdDaoInterface {
 	private static final String DELETE = "DELETE " 
 									   + "FROM prod "
 									   + "WHERE prod_id = ?";
+	private static final Logger LOG = Logger.getLogger(ProdDao.class);
 	private Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -56,10 +59,10 @@ public class ProdDao implements ProdDaoInterface {
 			this.ps.setDouble(3, prod.getPrice());
 			this.ps.executeUpdate();
 			this.rs = ps.getGeneratedKeys();
-			this.rs.next();
-			prod.setProdID(rs.getInt(1));
+			if (this.rs.next())
+				prod.setProdID(rs.getInt(1));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return prod;
@@ -74,10 +77,10 @@ public class ProdDao implements ProdDaoInterface {
 			this.ps = connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			prod = Mapper.prod(rs);
+			if (this.rs.next())
+				prod = Mapper.prod(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return prod;
@@ -95,7 +98,7 @@ public class ProdDao implements ProdDaoInterface {
 			this.ps.setInt(4, prod.getProdID());
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return prod;
@@ -109,7 +112,7 @@ public class ProdDao implements ProdDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 	}
@@ -125,7 +128,7 @@ public class ProdDao implements ProdDaoInterface {
 				prods.add(Mapper.prod(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return prods;
 	}

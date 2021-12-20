@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.OrderDetailsDaoInterface;
 import com.gmail.fomenkoc.domain.OrderDetails;
 import com.gmail.fomenkoc.domain.OrderHead;
@@ -39,6 +41,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 	private static final String DELETE = "DELETE "
 									   + "FROM order_details "
 									   + "WHERE order_det_id = ?";
+	private static final Logger LOG = Logger.getLogger(OrderDetailsDao.class);
 	private Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
@@ -68,10 +71,10 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			this.ps.setDouble(5, orderDetails.getSum());
 			this.ps.executeUpdate();
 			this.rs = this.ps.getGeneratedKeys();
-			this.rs.next();
-			orderDetails.setOrderDetID(rs.getInt(1));
+			if(this.rs.next())
+				orderDetails.setOrderDetID(rs.getInt(1));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		updateTotals(orderDetails.getOrderID());
 		return orderDetails;
@@ -85,10 +88,10 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			this.ps = connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = this.ps.executeQuery();
-			this.rs.next();
-			orderDetails = Mapper.orderDetails(rs);
+			if(this.rs.next())
+				orderDetails = Mapper.orderDetails(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return orderDetails;
@@ -106,8 +109,9 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			this.ps.setDouble(4, orderDetails.getPrice());
 			this.ps.setDouble(5, orderDetails.getSum());
 			this.ps.setInt(6, orderDetails.getOrderDetID());
+			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		updateTotals(orderDetails.getOrderID());
 		return orderDetails;
@@ -121,7 +125,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		
 	}
@@ -137,7 +141,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 				details.add(Mapper.orderDetails(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return details;
 	}
@@ -153,7 +157,7 @@ public class OrderDetailsDao implements OrderDetailsDaoInterface {
 				details.add(Mapper.orderDetails(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return details;
 	}

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.gmail.fomenkoc.dao.CartDaoInterface;
 import com.gmail.fomenkoc.domain.Cart;
 import com.gmail.fomenkoc.utils.DBConnetcion;
@@ -33,6 +35,7 @@ public class CartDao implements CartDaoInterface {
 	private static final String DELETE = "DELETE "
 									   + "FROM cart "
 									   + "WHERE cart_id = ?";
+	private static final Logger LOG = Logger.getLogger(CartDao.class);
 	
 	private Connection connection;
 	private PreparedStatement ps;
@@ -62,10 +65,10 @@ public class CartDao implements CartDaoInterface {
 			this.ps.setDouble(5, cart.getSum());
 			this.ps.executeUpdate();
 			this.rs = ps.getGeneratedKeys();
-			this.rs.next();
-			cart.setCartID(rs.getInt("cart_id"));
+			if (this.rs.next())
+				cart.setCartID(rs.getInt("cart_id"));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 		return cart;
@@ -79,10 +82,10 @@ public class CartDao implements CartDaoInterface {
 			this.ps = connection.prepareStatement(READ);
 			this.ps.setInt(1, id);
 			this.rs = ps.executeQuery();
-			this.rs.next();
-			cart = Mapper.cart(rs);
+			if (this.rs.next())
+				cart = Mapper.cart(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return cart;
 	}
@@ -101,7 +104,7 @@ public class CartDao implements CartDaoInterface {
 			this.ps.setInt(6, cart.getCartID());
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return cart;
 	}
@@ -114,7 +117,7 @@ public class CartDao implements CartDaoInterface {
 			this.ps.setInt(1, id);
 			this.ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 
 	}
@@ -130,7 +133,7 @@ public class CartDao implements CartDaoInterface {
 				carts.add(Mapper.cart(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return carts;
 	}
