@@ -20,7 +20,7 @@ $("button.createProduct")
 //										$("form")[0].reset();
 //										$("form")[1].reset();
 //										showAlertAfterRegistration();
-										alert('Success');
+//										alert('Success');
 									}
 								});
 					
