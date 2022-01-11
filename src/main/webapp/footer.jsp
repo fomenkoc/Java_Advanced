@@ -8,10 +8,10 @@
 <!--footer starts from here-->
 <footer class="footer">
 	<div class="container bottom_border">
-		<div class="row">
+		<!-- <div class="row">
 			<div class=" col-sm-4 col-md col-sm-4  col-12 col">
 				<h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
-				<!--headin5_amrc-->
+				headin5_amrc
 				<p class="mb10">Lorem Ipsum is simply dummy text of the printing
 					and typesetting industry. Lorem Ipsum has been the industry's
 					standard dummy text ever since the 1500s</p>
@@ -31,7 +31,7 @@
 
 			<div class=" col-sm-4 col-md  col-6 col">
 				<h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
-				<!--headin5_amrc-->
+				headin5_amrc
 				<ul class="footer_ul_amrc">
 					<li><a href="http://kalarikendramdelhi.com">Image
 							Rectoucing</a></li>
@@ -43,13 +43,13 @@
 							Masking/Clipping</a></li>
 					<li><a href="http://kalarikendramdelhi.com">Image Cropping</a></li>
 				</ul>
-				<!--footer_ul_amrc ends here-->
+				footer_ul_amrc ends here
 			</div>
 
 
 			<div class=" col-sm-4 col-md  col-6 col">
 				<h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
-				<!--headin5_amrc-->
+				headin5_amrc
 				<ul class="footer_ul_amrc">
 					<li><a href="http://kalarikendramdelhi.com">Remove
 							Background</a></li>
@@ -61,13 +61,13 @@
 							Masking/Clipping</a></li>
 					<li><a href="http://kalarikendramdelhi.com">Image Cropping</a></li>
 				</ul>
-				<!--footer_ul_amrc ends here-->
+				footer_ul_amrc ends here
 			</div>
 
 
 			<div class=" col-sm-4 col-md  col-12 col">
 				<h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
-				<!--headin5_amrc ends here-->
+				headin5_amrc ends here
 
 				<ul class="footer_ul2_amrc">
 					<li><a href="#"><i
@@ -86,13 +86,13 @@
 							Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a>
 						</p></li>
 				</ul>
-				<!--footer_ul2_amrc ends here-->
+				footer_ul2_amrc ends here
 			</div>
 		</div>
-	</div>
+	 </div>
 
-
-	<div class="container">
+ -->
+	<!-- <div class="container">
 		<ul class="foote_bottom_ul_amrc">
 			<li><a href="http://kalarikendramdelhi.com">Home</a></li>
 			<li><a href="http://kalarikendramdelhi.com">About</a></li>
@@ -100,13 +100,13 @@
 			<li><a href="http://kalarikendramdelhi.com">Pricing</a></li>
 			<li><a href="http://kalarikendramdelhi.com">Blog</a></li>
 			<li><a href="http://kalarikendramdelhi.com">Contact</a></li>
-		</ul>
+		</ul> -->
 		<!--foote_bottom_ul_amrc ends here-->
 		<p class="text-center">
-			Copyright @2017 | Designed With by <a href="#">Your Company Name</a>
+			Copyright @2022 | Designed With by <a href="#">Your Company Name</a>
 		</p>
 
-		<ul class="social_footer_ul">
+		<!-- <ul class="social_footer_ul">
 			<li><a href="http://kalarikendramdelhi.com"><i
 					class="fab fa-facebook-f"></i></a></li>
 			<li><a href="http://kalarikendramdelhi.com"><i
@@ -115,7 +115,7 @@
 					class="fab fa-linkedin"></i></a></li>
 			<li><a href="http://kalarikendramdelhi.com"><i
 					class="fab fa-instagram"></i></a></li>
-		</ul>
+		</ul> -->
 		<!--social_footer_ul ends here-->
 	</div>
 

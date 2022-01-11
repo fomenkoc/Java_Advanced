@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet {
 			 * req.getRequestDispatcher("welcome.jsp").forward(req, resp);
 			 */
 			UserLogin userLogin = new UserLogin();
-			userLogin.destinationUrl = "welcome.jsp";
+			/* userLogin.destinationUrl = "welcome.jsp"; */
+			userLogin.destinationUrl = "cabinet.jsp";
 			userLogin.userEmail = user.getEmail();
 			String json = new Gson().toJson(userLogin);
 			resp.setContentType("application/json");
