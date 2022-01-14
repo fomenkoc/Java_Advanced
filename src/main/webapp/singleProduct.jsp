@@ -12,6 +12,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<link rel="stylesheet" href="css/singleProduct.css">
 
 </head>
 <body>
@@ -20,7 +21,7 @@
 
 
 	<div class="container-fluid single-product">
-		<div class="col">
+		<div class="prodCol">
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">${prod.prodName}</h5>

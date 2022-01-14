@@ -12,19 +12,8 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
-<style type="text/css">
-footer {
-	width: 100%;
-	background-color: #263238;
-	padding: 10px 0px 25px 0px;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	padding: 1rem;
-	text-align: center;
-}
-</style>
+<link rel="stylesheet" href="css/cabinet.css">
+
 
 </head>
 <body>
