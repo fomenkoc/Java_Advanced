@@ -6,7 +6,7 @@ public class User {
 	private Integer userID;
 	private String email;
 	private String firstName;
-	private String lastNmae;
+	private String lastName;
 	private Integer roleID;
 	private String password;
 
@@ -16,7 +16,7 @@ public class User {
 		this.userID = userID;
 		this.email = email;
 		this.firstName = firstName;
-		this.lastNmae = lastNmae;
+		this.lastName = lastNmae;
 		this.roleID = roleID;
 		this.password = password;
 	}
@@ -26,7 +26,7 @@ public class User {
 		super();
 		this.email = email;
 		this.firstName = firstName;
-		this.lastNmae = lastNmae;
+		this.lastName = lastNmae;
 		this.roleID = roleID;
 		this.password = password;
 	}
@@ -56,11 +56,11 @@ public class User {
 	}
 
 	public String getLastNmae() {
-		return lastNmae;
+		return lastName;
 	}
 
 	public void setLastNmae(String lastNmae) {
-		this.lastNmae = lastNmae;
+		this.lastName = lastNmae;
 	}
 
 	public Integer getRoleID() {
@@ -81,7 +81,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, lastNmae, password, roleID,
+		return Objects.hash(email, firstName, lastName, password, roleID,
 				userID);
 	}
 
@@ -96,7 +96,7 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(email, other.email)
 				&& Objects.equals(firstName, other.firstName)
-				&& Objects.equals(lastNmae, other.lastNmae)
+				&& Objects.equals(lastName, other.lastName)
 				&& Objects.equals(password, other.password)
 				&& Objects.equals(roleID, other.roleID)
 				&& Objects.equals(userID, other.userID);
@@ -105,7 +105,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userID=" + userID + ", email=" + email + ", firstName="
-				+ firstName + ", lastNmae=" + lastNmae + ", roleID=" + roleID
+				+ firstName + ", lastNmae=" + lastName + ", roleID=" + roleID
 				+ ", password=" + password + "]";
 	}
 

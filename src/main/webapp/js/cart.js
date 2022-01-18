@@ -22,7 +22,7 @@ function myFunction() {
 
 
 let buckets = null;
-$.get("buckets", function(data) {
+$.get("cart", function(data) {
 	if (data !== '') {
 		buckets = data;
 	}
@@ -32,17 +32,20 @@ $.get("buckets", function(data) {
 					"<th style='width: 20%;'>Name</th>"+
 					"<th style='width: 20%;'>Description</th>"+
 					"<th style='width: 20%;'>Price</th>"+
-					"<th style='width: 20%;'>PurchaseDate</th>"+
-					"<th style='width: 20%;'>Options</th>"+
+					"<th style='width: 10%;'>Quantity</th>"+
+					"<th style='width: 20%;'>Sum</th>"+
+					"<th style='width: 10%;'>Options</th>"+
 					"</tr>";
 	
 	jQuery.each(buckets, function(i, value) {
 	
 		tableContent+="<tr>"+
-					  "<td>" + value.name + "</td>"+
+					  "<td>" + value.prodName + "</td>"+
 					  "<td>" + value.description + "</td>"+
 					  "<td>" + value.price + "</td>"+
-					  "<td><button onclick='deleteOrderFromBucket(" + value.bucketId + ")'>delete</button></td>"+
+					  "<td>" + value.quantity + "</td>"+
+					  "<td>" + value.sum + "</td>"+
+					  "<td><button onclick='deleteCart(" + value.cartID + ")'>delete</button></td>"+
 					  "</tr>"
 					   
 	});
@@ -51,13 +54,13 @@ $.get("buckets", function(data) {
 	
 });
 
-function deleteOrderFromBucket(bucketId) {	
-	var customUrl = '';
-	var urlContent = window.location.href.split('/');
-	for (var i = 0; i < urlContent.length-1; i++) {
+function deleteCart(cartID) {	
+	let customUrl = '';
+	let urlContent = window.location.href.split('/');
+	for (let i = 0; i < urlContent.length-1; i++) {
 		customUrl+=urlContent[i]+'/'
 	}
-	customUrl+='bucket?bucketId='+bucketId;
+	customUrl+='cart?cartID='+cartID;
 	
 	$.ajax({
 	    url: customUrl,

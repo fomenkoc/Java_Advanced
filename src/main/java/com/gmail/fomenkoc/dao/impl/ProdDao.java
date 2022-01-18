@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -131,6 +134,12 @@ public class ProdDao implements ProdDaoInterface {
 			LOG.error(e);
 		}
 		return prods;
+	}
+
+	@Override
+	public Map<Integer, Prod> readAllMap() {
+		return readAll().stream().collect(
+				Collectors.toMap(Prod::getProdID, Function.identity()));
 	}
 
 }

@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 			
 			HttpSession session = req.getSession(true);
 			session.setAttribute("userID", user.getUserID());
+			session.setAttribute("roleID", user.getRoleID());
 			
 			UserLogin userLogin = new UserLogin();
 			userLogin.destinationUrl = "cabinet.jsp";
