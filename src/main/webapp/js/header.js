@@ -1,5 +1,7 @@
 "use strict";
 
+let role = null;
+
 $(document).ready(function() {
 	$('.leftmenutrigger').on('click', function(e) {
 		$('.side-nav').toggleClass("open");
@@ -20,4 +22,20 @@ $("a.product-logout").click(function() {
 		}
 	});
 
+});
+
+
+$(document).ready(function() {
+	$.get("role", function(data) {
+		if (data !== '') {
+			role = data;
+		}
+	}).done(function() {
+		if (role.isStaff === true) {
+//			alert("staff");
+		} else {
+			$(".staff-only").hide();
+			
+		}
+	});
 });

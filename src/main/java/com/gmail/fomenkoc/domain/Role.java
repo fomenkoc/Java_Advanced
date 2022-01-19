@@ -6,16 +6,20 @@ public class Role {
 
 	private Integer roleID;
 	private String roleName;
+	private Boolean isStaff;
+	
 
-	public Role(Integer roleID, String roleName) {
+	public Role(Integer roleID, String roleName, Boolean isStaff) {
 		super();
 		this.roleID = roleID;
 		this.roleName = roleName;
+		this.isStaff = isStaff;
 	}
 
 	public Role(String roleName) {
 		super();
 		this.roleName = roleName;
+		this.isStaff = false;
 	}
 
 	public Integer getRoleID() {
@@ -34,9 +38,17 @@ public class Role {
 		this.roleName = roleName;
 	}
 
+	public Boolean getIsStaff() {
+		return isStaff;
+	}
+
+	public void setIsStaff(Boolean isStaff) {
+		this.isStaff = isStaff;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(roleID, roleName);
+		return Objects.hash(isStaff, roleID, roleName);
 	}
 
 	@Override
@@ -48,13 +60,17 @@ public class Role {
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		return Objects.equals(roleID, other.roleID)
+		return Objects.equals(isStaff, other.isStaff)
+				&& Objects.equals(roleID, other.roleID)
 				&& Objects.equals(roleName, other.roleName);
 	}
 
 	@Override
 	public String toString() {
-		return "Role [roleID=" + roleID + ", roleName=" + roleName + "]";
+		return "Role [roleID=" + roleID + ", roleName=" + roleName
+				+ ", isStaff=" + isStaff + "]";
 	}
+
+
 
 }

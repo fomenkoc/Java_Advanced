@@ -19,6 +19,10 @@ public class RoleDao implements RoleDaoInterface {
 	private static final String READ_ALL = "SELECT * "
 										 + "FROM role";
 	
+	private static final String READ_STAFF =  "SELECT * "
+											+ "FROM role "
+											+ "WHERE is_staff = true";
+	
 	private static final String CREATE = "INSERT INTO role(role_name) "
 									   + "VALUES(?)";
 	
@@ -117,6 +121,22 @@ public class RoleDao implements RoleDaoInterface {
 		ArrayList<Role> roles = new ArrayList<>();
 		try {
 			this.ps = connection.prepareStatement(READ_ALL);
+			this.rs = this.ps.executeQuery();
+			while (this.rs.next()) {
+				roles.add(Mapper.role(rs));
+			}
+		} catch (SQLException e) {
+			LOG.error(e);
+		}
+		return roles;
+	}
+
+	@Override
+	public ArrayList<Role> readStaff() {
+		initStatements();
+		ArrayList<Role> roles = new ArrayList<>();
+		try {
+			this.ps = connection.prepareStatement(READ_STAFF);
 			this.rs = this.ps.executeQuery();
 			while (this.rs.next()) {
 				roles.add(Mapper.role(rs));

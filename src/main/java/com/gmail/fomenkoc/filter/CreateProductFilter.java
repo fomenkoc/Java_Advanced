@@ -24,7 +24,7 @@ public class CreateProductFilter extends HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		filterService.doFilterValidation(request, response, chain,
-															roleDao.readAll());
+														roleDao.readStaff());
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

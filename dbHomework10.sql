@@ -44,12 +44,13 @@ VALUES
 
 CREATE TABLE role(
 	role_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    role_name VARCHAR(255) NOT NULL UNIQUE
+    role_name VARCHAR(255) NOT NULL UNIQUE,
+    is_staff BIT NOT NULL DEFAULT (FALSE)
 );
-INSERT INTO role (role_name)
+INSERT INTO role (role_name, is_staff)
 VALUES
-	('Administrator'),
-    ('Coustomer');
+	('Administrator', true),
+    ('Coustomer', false);
 
 CREATE TABLE user(
 	user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

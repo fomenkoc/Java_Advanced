@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +16,9 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
-<link rel="stylesheet" href="css/cart.css">
-
-
+<link rel="stylesheet" href="css/users.css">
 </head>
 <body>
-	
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div class="container-fluid">
@@ -52,6 +48,6 @@
     </script>
 
 	<script src="js/header.js"></script>
-	<script src="js/cart.js"></script>
+	<script src="js/users.js"></script>
 </body>
 </html>

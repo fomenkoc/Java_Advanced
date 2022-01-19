@@ -18,13 +18,16 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/createProduct.jsp">New Product</a>
+            <a class="nav-link staff-only" href="${pageContext.request.contextPath}/createProduct.jsp">New Product</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/cart.jsp">Cart</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/welcome.jsp">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link staff-only" href="${pageContext.request.contextPath}/users.jsp">Users</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-md-auto d-md-flex">

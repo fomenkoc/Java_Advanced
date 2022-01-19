@@ -90,7 +90,8 @@ public class Mapper {
 		try {
 			roleID = rs.getInt("role_id");
 			String roleName = rs.getString("role_name");
-			role = new Role(roleID, roleName);
+			Boolean isStaff = rs.getBoolean("is_staff");
+			role = new Role(roleID, roleName, isStaff);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
