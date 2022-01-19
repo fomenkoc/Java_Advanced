@@ -37,7 +37,7 @@ public class CartController extends HttpServlet {
 		Cart cart = new Cart(userID, prodID);
 		cartDao.create(cart);
 		
-		response.setContentType("test");
+		response.setContentType("text");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("Success");
 	}
@@ -45,7 +45,9 @@ public class CartController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 										throws ServletException, IOException {
-		List<Cart> carts = cartDao.readAll();
+		HttpSession session = req.getSession();
+		Integer userID = Integer.parseInt(session.getAttribute("userID").toString());
+		List<Cart> carts = cartDao.readByUserID(userID);
 		Map<Integer, Prod> idToProd = prodDao.readAllMap();
 		List<CartDto> listOfCartDtos = map(carts, idToProd);
 		

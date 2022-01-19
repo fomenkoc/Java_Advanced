@@ -31,11 +31,9 @@ $(document).ready(function() {
 			role = data;
 		}
 	}).done(function() {
-		if (role.isStaff === true) {
-//			alert("staff");
-		} else {
+		if (role.isStaff !== true) {
 			$(".staff-only").hide();
-			
 		}
+		$(".user-role").html(role.roleName);
 	});
 });

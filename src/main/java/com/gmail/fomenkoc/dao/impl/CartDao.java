@@ -27,6 +27,10 @@ public class CartDao implements CartDaoInterface {
 									 + "FROM cart "
 									 + "WHERE cart_id = ?";
 	
+	private static final String READ_BY_USERID =  "SELECT * "
+			 									+ "FROM cart "
+			 									+ "WHERE user_id = ?";
+	
 	private static final String UPDATE = 
 			   "UPDATE cart "
 			 + "SET user_id = ?, prod_id = ?, price = ?, quantity = ?, sum = ? "
@@ -128,6 +132,23 @@ public class CartDao implements CartDaoInterface {
 		ArrayList<Cart> carts = new ArrayList<>();
 		try {
 			this.ps = connection.prepareStatement(READ_ALL);
+			this.rs = this.ps.executeQuery();
+			while (this.rs.next()) {
+				carts.add(Mapper.cart(rs));
+			}
+		} catch (SQLException e) {
+			LOG.error(e);
+		}
+		return carts;
+	}
+
+	@Override
+	public ArrayList<Cart> readByUserID(Integer userID) {
+		initStatements();
+		ArrayList<Cart> carts = new ArrayList<>();
+		try {
+			this.ps = connection.prepareStatement(READ_BY_USERID);
+			this.ps.setInt(1, userID);
 			this.rs = this.ps.executeQuery();
 			while (this.rs.next()) {
 				carts.add(Mapper.cart(rs));

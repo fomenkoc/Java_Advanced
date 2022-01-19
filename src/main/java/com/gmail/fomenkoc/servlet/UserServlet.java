@@ -1,6 +1,7 @@
 package com.gmail.fomenkoc.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,17 +26,14 @@ public class UserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		userID = Integer.parseInt(session.getAttribute("userID").toString());
 		user = userDao.read(userID);
-
+		
 		String json = new Gson().toJson(user);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
+		
 
-		/*
-		 * System.out.println(user); request.setAttribute("user", user);
-		 * request.getRequestDispatcher("welcome.jsp").forward(request,
-		 * response);
-		 */
+		
 	}
 
 	protected void doPost(HttpServletRequest request,
