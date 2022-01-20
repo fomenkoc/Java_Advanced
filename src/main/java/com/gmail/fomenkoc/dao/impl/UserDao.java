@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.gmail.fomenkoc.dao.UserDaoInterface;
+import com.gmail.fomenkoc.domain.Cart;
 import com.gmail.fomenkoc.domain.User;
 import com.gmail.fomenkoc.utils.DBConnetcion;
 import com.gmail.fomenkoc.utils.Mapper;
@@ -63,7 +65,7 @@ public class UserDao implements UserDaoInterface {
 			this.ps = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 			this.ps.setString(1, user.getEmail());
 			this.ps.setString(2, user.getFirstName());
-			this.ps.setString(3, user.getLastNmae());
+			this.ps.setString(3, user.getLastName());
 			this.ps.setInt(4, user.getRoleID());
 			this.ps.setString(5, user.getPassword());
 			this.ps.executeUpdate();
@@ -100,7 +102,7 @@ public class UserDao implements UserDaoInterface {
 			this.ps = connection.prepareStatement(UPDATE);
 			this.ps.setString(1, user.getEmail());
 			this.ps.setString(2, user.getFirstName());
-			this.ps.setString(3, user.getLastNmae());
+			this.ps.setString(3, user.getLastName());
 			this.ps.setInt(4, user.getRoleID());
 			this.ps.setString(5, user.getPassword());
 			this.ps.setInt(6, user.getUserID());
@@ -113,6 +115,12 @@ public class UserDao implements UserDaoInterface {
 
 	@Override
 	public void delete(Integer id) {
+		CartDao cartDao = new CartDao();
+		List<Cart> carts = cartDao.readByUserID(id);
+		for (Cart cart : carts) {
+			cartDao.delete(cart.getCartID());
+		}
+		
 		initStatements();
 		try {
 			this.ps = connection.prepareStatement(DELETE);
@@ -156,5 +164,7 @@ public class UserDao implements UserDaoInterface {
 		}
 		return user;
 	}
+
+	
 
 }

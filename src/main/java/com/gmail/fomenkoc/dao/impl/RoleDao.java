@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -145,6 +148,12 @@ public class RoleDao implements RoleDaoInterface {
 			LOG.error(e);
 		}
 		return roles;
+	}
+
+	@Override
+	public Map<Integer, Role> readAllMap() {
+		return readAll().stream().collect(
+				Collectors.toMap(Role::getRoleID, Function.identity()));
 	}
 
 }

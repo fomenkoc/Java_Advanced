@@ -21,31 +21,29 @@ function myFunction() {
 
 
 
-let buckets = null;
-$.get("cart", function(data) {
+let users = null;
+$.post("user", function(data) {
 	if (data !== '') {
-		buckets = data;
+		users = data;
 	}
 }).done(function() {
 	
 	let tableContent = "<tr class='header'>"+
-					"<th style='width: 20%;'>Name</th>"+
-					"<th style='width: 20%;'>Description</th>"+
-					"<th style='width: 20%;'>Price</th>"+
-					"<th style='width: 10%;'>Quantity</th>"+
-					"<th style='width: 20%;'>Sum</th>"+
-					"<th style='width: 10%;'>Options</th>"+
+					"<th style='width: 20%;'>First Name</th>"+
+					"<th style='width: 20%;'>Last Name</th>"+
+					"<th style='width: 20%;'>Role</th>"+
+					"<th style='width: 20%;'>Email</th>"+
+					"<th style='width: 20%;'>Options</th>"+
 					"</tr>";
 	
-	jQuery.each(buckets, function(i, value) {
+	jQuery.each(users, function(i, value) {
 	
 		tableContent+="<tr>"+
-					  "<td>" + value.prodName + "</td>"+
-					  "<td>" + value.description + "</td>"+
-					  "<td>" + value.price + "</td>"+
-					  "<td>" + value.quantity + "</td>"+
-					  "<td>" + value.sum + "</td>"+
-					  "<td><button onclick='deleteCart(" + value.cartID + ")'>delete</button></td>"+
+					  "<td>" + value.firstName + "</td>"+
+					  "<td>" + value.lastName + "</td>"+
+					  "<td>" + value.roleName + "</td>"+
+					  "<td>" + value.email + "</td>"+
+					  "<td><button onclick='deleteUser(" + value.userID + ")'>delete</button></td>"+
 					  "</tr>"
 					   
 	});
@@ -54,13 +52,13 @@ $.get("cart", function(data) {
 	
 });
 
-function deleteCart(cartID) {	
+function deleteUser(userID) {	
 	let customUrl = '';
 	let urlContent = window.location.href.split('/');
 	for (let i = 0; i < urlContent.length-1; i++) {
 		customUrl+=urlContent[i]+'/'
 	}
-	customUrl+='cart?cartID='+cartID;
+	customUrl+='user?userID='+userID;
 	
 	$.ajax({
 	    url: customUrl,

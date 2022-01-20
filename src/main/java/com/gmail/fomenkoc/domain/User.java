@@ -10,23 +10,23 @@ public class User {
 	private Integer roleID;
 	private String password;
 
-	public User(Integer userID, String email, String firstName, String lastNmae,
+	public User(Integer userID, String email, String firstName, String lastName,
 			Integer roleID, String password) {
 		super();
 		this.userID = userID;
 		this.email = email;
 		this.firstName = firstName;
-		this.lastName = lastNmae;
+		this.lastName = lastName;
 		this.roleID = roleID;
 		this.password = password;
 	}
 
-	public User(String email, String firstName, String lastNmae, Integer roleID,
+	public User(String email, String firstName, String lastName, Integer roleID,
 			String password) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
-		this.lastName = lastNmae;
+		this.lastName = lastName;
 		this.roleID = roleID;
 		this.password = password;
 	}
@@ -55,12 +55,12 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public String getLastNmae() {
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastNmae(String lastNmae) {
-		this.lastName = lastNmae;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Integer getRoleID() {

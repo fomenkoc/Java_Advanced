@@ -1,7 +1,6 @@
 package com.gmail.fomenkoc.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,13 +43,14 @@ public class CartController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-										throws ServletException, IOException {
+			throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		Integer userID = Integer.parseInt(session.getAttribute("userID").toString());
+		Integer userID = Integer
+				.parseInt(session.getAttribute("userID").toString());
 		List<Cart> carts = cartDao.readByUserID(userID);
 		Map<Integer, Prod> idToProd = prodDao.readAllMap();
 		List<CartDto> listOfCartDtos = map(carts, idToProd);
-		
+
 		String json = new Gson().toJson(listOfCartDtos);
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
