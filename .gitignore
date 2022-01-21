@@ -1,0 +1,31 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+/bin/
+# Default excludes
+
+# Binaries
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
+*.class
+
+# eclipse project file
+.settings/
+.classpath
+.project
+/bin/
+
+# datafiles
+*.txt
+*.obj
