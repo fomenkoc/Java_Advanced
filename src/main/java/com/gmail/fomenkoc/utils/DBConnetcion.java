@@ -12,7 +12,7 @@ public class DBConnetcion {
 	private static String USER_NAME;
 	private static String PASSWORD;
 	private static final String URL = 
-						"jdbc:mysql://localhost:3306/Store?serverTimezone=UTC";
+						"jdbc:mysql://localhost:3306/store?serverTimezone=UTC";
 	private static final Logger LOG = Logger.getLogger(DBConnetcion.class);
 
 	public static Connection getConnection(String userName, String password)
