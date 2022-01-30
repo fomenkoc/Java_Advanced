@@ -1,6 +1,6 @@
 package com.gmail.fomenkoc.shared;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CRUDInterface<T> {
 
@@ -12,5 +12,5 @@ public interface CRUDInterface<T> {
 
 	void delete(Integer id);
 	
-	ArrayList<T> readAll();
+	List<T> readAll();
 }

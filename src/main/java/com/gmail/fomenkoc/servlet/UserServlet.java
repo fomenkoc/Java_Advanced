@@ -72,12 +72,12 @@ public class UserServlet extends HttpServlet {
 	private List<UserDto> map(List<User> users, Map<Integer, Role> idToRole){
 		return users.stream().map(user -> {
 			UserDto userDto = new UserDto();
-			Role role = idToRole.get(user.getRoleID());
+			Role role = idToRole.get(user.getRole().getRoleID());
 			userDto.userID = user.getUserID();
 			userDto.email = user.getEmail();
 			userDto.firstName = user.getFirstName();
 			userDto.lastName = user.getLastName();
-			userDto.roleID = user.getRoleID();
+			userDto.roleID = user.getRole().getRoleID();
 			userDto.roleName = role.getRoleName();
 			return userDto;
 			

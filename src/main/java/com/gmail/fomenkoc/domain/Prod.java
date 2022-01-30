@@ -2,24 +2,41 @@ package com.gmail.fomenkoc.domain;
 
 import java.util.Objects;
 
-public class Prod {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "prod")
+public class Prod {
+	@Id
+	@Column(name = "prod_id")
+	@GeneratedValue
 	private Integer prodID;
+	@Column(name = "prod_name")
 	private String prodName;
+	@Column(name = "description")
 	private String description;
+	@Column(name = "price")
 	private Double price;
 
-	public Prod(Integer prodID, String prodName, String description,
-			Double price) {
+	public Prod() {
 		super();
-		this.prodID = prodID;
+	}
+
+	public Prod(String prodName, String description, Double price) {
+		super();
 		this.prodName = prodName;
 		this.description = description;
 		this.price = price;
 	}
 
-	public Prod(String prodName, String description, Double price) {
+	public Prod(Integer prodID, String prodName, String description,
+			Double price) {
 		super();
+		this.prodID = prodID;
 		this.prodName = prodName;
 		this.description = description;
 		this.price = price;

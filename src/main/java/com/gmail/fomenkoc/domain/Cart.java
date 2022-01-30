@@ -2,44 +2,72 @@ package com.gmail.fomenkoc.domain;
 
 import java.util.Objects;
 
-import com.gmail.fomenkoc.dao.impl.ProdDao;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.gmail.fomenkoc.dao.impl.ProdDao;
+import com.gmail.fomenkoc.dao.impl.UserDao;
+
+@Entity
+@Table(name = "cart")
 public class Cart {
+	@Id
+	@Column(name = "cart_id")
+	@GeneratedValue
 	private Integer cartID;
-	private Integer userID;
-	private Integer prodID;
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
+	@ManyToOne
+	@JoinColumn(name = "prod_id", referencedColumnName = "prod_id")
+	private Prod prod;
+	@Column(name = "price")
 	private Double price;
+	@Column(name = "quantity")
 	private Double quantity;
+	@Column(name = "sum")
 	private Double sum;
 
-	public Cart(Integer cartID, Integer userID, Integer prodID, Double price,
-			Double quantity, Double sum) {
+	public Cart() {
 		super();
-		this.cartID = cartID;
-		this.userID = userID;
-		this.prodID = prodID;
-		this.price = price;
-		this.quantity = quantity;
-		this.sum = sum;
-	}
-
-	public Cart(Integer userID, Integer prodID, Double price, Double quantity,
-			Double sum) {
-		super();
-		this.userID = userID;
-		this.prodID = prodID;
-		this.price = price;
-		this.quantity = quantity;
-		this.sum = sum;
 	}
 	
 	public Cart(Integer userID, Integer prodID) {
-		this(userID, prodID, 0.0, 1.0, 0.0);
+		UserDao userDao = new UserDao();
 		ProdDao prodDao = new ProdDao();
+		User user = userDao.read(userID);
 		Prod prod = prodDao.read(prodID);
-		Double price = prod.getPrice();
+		this.user = user;
+		this.prod = prod;
+		this.price = prod.getPrice();
+		this.quantity = 1.0;
+		this.sum = prod.getPrice();
+	}
+
+	public Cart(User user, Prod prod, Double price, Double quantity,
+			Double sum) {
+		super();
+		this.user = user;
+		this.prod = prod;
 		this.price = price;
-		this.sum = price;
+		this.quantity = quantity;
+		this.sum = sum;
+	}
+
+	public Cart(Integer cartID, User user, Prod prod, Double price,
+			Double quantity, Double sum) {
+		super();
+		this.cartID = cartID;
+		this.user = user;
+		this.prod = prod;
+		this.price = price;
+		this.quantity = quantity;
+		this.sum = sum;
 	}
 
 	public Integer getCartID() {
@@ -50,20 +78,20 @@ public class Cart {
 		this.cartID = cartID;
 	}
 
-	public Integer getUserID() {
-		return userID;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Integer getProdID() {
-		return prodID;
+	public Prod getProd() {
+		return prod;
 	}
 
-	public void setProdID(Integer prodID) {
-		this.prodID = prodID;
+	public void setProd(Prod prod) {
+		this.prod = prod;
 	}
 
 	public Double getPrice() {
@@ -92,7 +120,7 @@ public class Cart {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cartID, price, prodID, quantity, sum, userID);
+		return Objects.hash(cartID, price, prod, quantity, sum, user);
 	}
 
 	@Override
@@ -106,17 +134,17 @@ public class Cart {
 		Cart other = (Cart) obj;
 		return Objects.equals(cartID, other.cartID)
 				&& Objects.equals(price, other.price)
-				&& Objects.equals(prodID, other.prodID)
+				&& Objects.equals(prod, other.prod)
 				&& Objects.equals(quantity, other.quantity)
 				&& Objects.equals(sum, other.sum)
-				&& Objects.equals(userID, other.userID);
+				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "Cart [cartID=" + cartID + ", userID=" + userID + ", prodID="
-				+ prodID + ", price=" + price + ", quantity=" + quantity
-				+ ", sum=" + sum + "]";
+		return "Cart [cartID=" + cartID + ", user=" + user + ", prod=" + prod
+				+ ", price=" + price + ", quantity=" + quantity + ", sum=" + sum
+				+ "]";
 	}
 
 }

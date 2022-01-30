@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.gmail.fomenkoc.dao.impl.RoleDao;
 import com.gmail.fomenkoc.dao.impl.UserDao;
 import com.gmail.fomenkoc.domain.User;
 import com.gmail.fomenkoc.dto.UserLogin;
+import com.gmail.fomenkoc.utils.FillDB;
 import com.google.gson.Gson;
 
 @WebServlet(name = "login", urlPatterns = { "/login" })
@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserDao userDao = new UserDao();
+		FillDB.run();
 		
 		this.email = req.getParameter("email");
 		this.password = req.getParameter("password");
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 
 			HttpSession session = req.getSession(true);
 			session.setAttribute("userID", user.getUserID());
-			session.setAttribute("roleID", user.getRoleID());
+			session.setAttribute("roleID", user.getRole().getRoleID());
 			
 
 			UserLogin userLogin = new UserLogin();

@@ -60,9 +60,9 @@ public class CartController extends HttpServlet {
 	public List<CartDto> map(List<Cart> carts, Map<Integer, Prod> idToProd) {
 		return carts.stream().map(cart -> {
 			CartDto cartDto = new CartDto();
-			Prod prod = idToProd.get(cart.getProdID());
+			Prod prod = idToProd.get(cart.getProd().getProdID());
 			cartDto.cartID = cart.getCartID();
-			cartDto.userID = cart.getUserID();
+			cartDto.userID = cart.getUser().getUserID();
 			cartDto.prodID = prod.getProdID();
 			cartDto.prodName = prod.getProdName();
 			cartDto.description = prod.getDescription();

@@ -12,7 +12,7 @@ import com.gmail.fomenkoc.domain.Role;
 import com.gmail.fomenkoc.domain.User;
 
 public class Mapper {
-
+/*
 	public static Cart cart(ResultSet rs) {
 
 		Cart cart = null;
@@ -115,5 +115,5 @@ public class Mapper {
 
 		return user;
 	}
-
+*/
 }

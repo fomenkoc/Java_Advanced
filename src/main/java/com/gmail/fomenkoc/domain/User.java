@@ -2,32 +2,55 @@ package com.gmail.fomenkoc.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public class User {
+	@Id
+	@Column(name = "user_id")
+	@GeneratedValue
 	private Integer userID;
+	@Column(name = "email")
 	private String email;
+	@Column(name = "first_name")
 	private String firstName;
+	@Column(name = "last_name")
 	private String lastName;
-	private Integer roleID;
+	@ManyToOne
+	@JoinColumn(name = "role_id",  referencedColumnName = "role_id")
+	private Role role;
+	@Column(name = "password")
 	private String password;
 
-	public User(Integer userID, String email, String firstName, String lastName,
-			Integer roleID, String password) {
+	public User() {
 		super();
-		this.userID = userID;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.roleID = roleID;
-		this.password = password;
 	}
 
-	public User(String email, String firstName, String lastName, Integer roleID,
+	public User(String email, String firstName, String lastName, Role role,
 			String password) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.roleID = roleID;
+		this.role = role;
+		this.password = password;
+	}
+
+	public User(Integer userID, String email, String firstName, String lastName,
+			Role role, String password) {
+		super();
+		this.userID = userID;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
 		this.password = password;
 	}
 
@@ -63,12 +86,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public Integer getRoleID() {
-		return roleID;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleID(Integer roleID) {
-		this.roleID = roleID;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public String getPassword() {
@@ -81,8 +104,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, lastName, password, roleID,
-				userID);
+		return Objects.hash(email, firstName, lastName, password, role, userID);
 	}
 
 	@Override
@@ -98,14 +120,14 @@ public class User {
 				&& Objects.equals(firstName, other.firstName)
 				&& Objects.equals(lastName, other.lastName)
 				&& Objects.equals(password, other.password)
-				&& Objects.equals(roleID, other.roleID)
+				&& Objects.equals(role, other.role)
 				&& Objects.equals(userID, other.userID);
 	}
 
 	@Override
 	public String toString() {
 		return "User [userID=" + userID + ", email=" + email + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", roleID=" + roleID
+				+ firstName + ", lastName=" + lastName + ", role=" + role
 				+ ", password=" + password + "]";
 	}
 

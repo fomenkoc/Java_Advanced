@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gmail.fomenkoc.dao.impl.RoleDao;
 import com.gmail.fomenkoc.dao.impl.UserDao;
+import com.gmail.fomenkoc.domain.Role;
 import com.gmail.fomenkoc.domain.User;
 
 @WebServlet(name = "registration", urlPatterns = { "/registration" })
@@ -22,8 +24,10 @@ public class RegistrationServlet extends HttpServlet {
 		String lastNmae = req.getParameter("lastName");
 		Integer roleID = 2;
 		String password = req.getParameter("password");
+		RoleDao roleDao = new RoleDao();
+		Role role = roleDao.read(roleID);
 
-		User user = new User(email, firstName, lastNmae, roleID, password);
+		User user = new User(email, firstName, lastNmae, role, password);
 		UserDao userDao = new UserDao();
 		user = userDao.create(user);
 

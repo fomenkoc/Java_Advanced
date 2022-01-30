@@ -2,24 +2,39 @@ package com.gmail.fomenkoc.domain;
 
 import java.util.Objects;
 
-public class Role {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "role")
+public class Role {
+	@Id
+	@Column(name = "role_id")
+	@GeneratedValue
 	private Integer roleID;
+	@Column(name = "role_name")
 	private String roleName;
+	@Column(name = "is_staff")
 	private Boolean isStaff;
-	
+
+	public Role() {
+		super();
+	}
+
+	public Role(String roleName, Boolean isStaff) {
+		super();
+		this.roleName = roleName;
+		this.isStaff = isStaff;
+	}
 
 	public Role(Integer roleID, String roleName, Boolean isStaff) {
 		super();
 		this.roleID = roleID;
 		this.roleName = roleName;
 		this.isStaff = isStaff;
-	}
-
-	public Role(String roleName) {
-		super();
-		this.roleName = roleName;
-		this.isStaff = false;
 	}
 
 	public Integer getRoleID() {
@@ -70,7 +85,5 @@ public class Role {
 		return "Role [roleID=" + roleID + ", roleName=" + roleName
 				+ ", isStaff=" + isStaff + "]";
 	}
-
-
 
 }
