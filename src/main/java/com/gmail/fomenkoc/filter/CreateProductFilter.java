@@ -13,7 +13,7 @@ import javax.servlet.http.HttpFilter;
 import com.gmail.fomenkoc.dao.impl.RoleDao;
 import com.gmail.fomenkoc.shared.FilterService;
 
-@WebFilter(filterName = "createProduct", urlPatterns = { "/createProduct.jsp" })
+//@WebFilter(filterName = "createProduct", urlPatterns = { "/createProduct.jsp" })
 public class CreateProductFilter extends HttpFilter implements Filter {
 	private FilterService filterService = FilterService.getFilterService();
 	private RoleDao roleDao = new RoleDao();
