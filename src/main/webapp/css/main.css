@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.myInput{
+    width: 90%;
+    margin-top: 5px;
+}
+
+.createStudent{
+    margin-top: 25px;
+    width: 20%;
+    background-color: gray;
+    display: flex;
+    justify-content: right;
+}
+
+#students{
+    margin-top: 25px;
+    width: 80%;
+    background-color: gray;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.student{
+	margin-top: 25px;
+}
+
+.photo{
+    max-height: 300px;
+}
